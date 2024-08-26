@@ -25,26 +25,45 @@ const Board = () => {
         squares[a] === squares[b] &&
         squares[a] === squares[c]
       ) {
-        console.log(a);
+        console.log("a", a);
         return squares[a];
       }
     }
-
-    const winner = calculateWinner(squares);
-
-    const status = `Next player ${xIsNext ? `X` : `0`}`;
-
-    const handleClick = (i) => {
-      const newSquares = squares.slice();
-      newSquares[i] = xIsNext ? "X" : "O";
-      setSquares(newSquares);
-      setxIsNext((prev) => !prev);
-    };
-
-    const renderSquare = (i) => {
-      return <Square value={squares[i]} onClick={() => handleClick(i)} />;
-    };
+    return null;
   };
+
+  const winner = calculateWinner(squares);
+
+  console.log("winner", winner);
+
+  let status;
+
+  switch (winner) {
+    case null:
+      status = `Next player ${xIsNext ? `X` : `O`}`;
+      break;
+    default:
+      status = `Player ${winner} wins!`;
+      break;
+  }
+
+  // const status = `Next player ${xIsNext ? `X` : `0`}`;
+
+  const handleClick = (i) => {
+    const newSquares = squares.slice();
+    if (calculateWinner(newSquares) || newSquares[i]) {
+      return;
+    }
+    newSquares[i] = xIsNext ? "X" : "O";
+
+    setSquares(newSquares);
+    setxIsNext((prev) => !prev);
+  };
+
+  const renderSquare = (i) => {
+    return <Square value={squares[i]} onClick={() => handleClick(i)} />;
+  };
+
   return (
     <div>
       <div className="status">{status}</div>
