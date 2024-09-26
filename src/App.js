@@ -63,10 +63,15 @@ function App() {
     const desc = index ? `Go to move # ${index}` : `Go to game start`;
     return (
       <li key={index}>
-        <button>{desc}</button>
+        <button onClick={() => jumpTo(index)}>{desc}</button>
       </li>
     );
   });
+
+  const jumpTo = (index) => {
+    setHistory(history.slice(0, index + 1));
+    setxIsNext(index % 2 === 0);
+  };
 
   return (
     <div className="game">
