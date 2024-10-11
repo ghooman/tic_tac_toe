@@ -63,13 +63,15 @@ function App() {
     const desc = index ? `Go to move # ${index}` : `Go to game start`;
     return (
       <li key={index}>
-        <button onClick={() => jumpTo(index)}>{desc}</button>
+        <button className="move-button" onClick={() => jumpTo(index)}>
+          {desc}
+        </button>
       </li>
     );
   });
 
   const jumpTo = (index) => {
-    setHistory(history.slice(0, index + 1));
+    setHistory((prev) => prev.slice(0, index + 1));
     setxIsNext(index % 2 === 0);
   };
 
@@ -80,7 +82,7 @@ function App() {
       </div>
       <div className="game-info">
         <div className="status">{status}</div>
-        <ol>{moves}</ol>
+        <ol style={{ listStyle: "none" }}>{moves}</ol>
       </div>
     </div>
   );
